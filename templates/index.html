@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ATLAS V2 | AI Traffic Command Center</title>
+<link rel="stylesheet" href="/static/css/style.css?v=directional-5055">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">A</div><div><b>ATLAS</b><span>AI TRAFFIC COMMAND CENTER · V2</span></div></div>
+  <div class="top-actions"><span id="connection" class="pill ok">● SYSTEM ONLINE</span><button id="demoBtn" class="btn accent">▶ DEMO MODE</button><button id="runBtn" class="btn">RUN AI</button></div>
+</header>
+
+<section class="hero">
+  <div><div class="eyebrow">DIGITAL TWIN / REAL-TIME CONTROL</div><h1>Adaptive Traffic Intelligence</h1><p>AI-controlled intersection simulation with emergency priority, incident response and explainable signal decisions.</p></div>
+  <div class="mode-card"><span>CONTROL MODE</span><strong id="mode">AI ADAPTIVE</strong><small id="reason">Waiting for decision…</small></div>
+</section>
+
+<section class="kpis">
+  <div class="kpi"><span>VEHICLES IN NETWORK</span><strong id="vehicles">—</strong><small>live queue</small></div>
+  <div class="kpi"><span>CONGESTION INDEX</span><strong id="congestion">—%</strong><div class="meter"><i id="congBar"></i></div></div>
+  <div class="kpi"><span>AVG WAIT</span><strong id="wait">—s</strong><small>per approach</small></div>
+  <div class="kpi"><span>THROUGHPUT</span><strong id="throughput">—</strong><small>vehicles served</small></div>
+  <div class="kpi"><span>AI DECISIONS</span><strong id="decisions">—</strong><small>adaptive cycles</small></div>
+</section>
+
+<main class="grid">
+<section class="panel intersection-panel">
+  <div class="panel-head"><div><h2>LIVE DIGITAL TWIN</h2><span>4-way adaptive intersection</span></div><div class="signal-label"><i></i><b id="greenRoad">NORTH</b> GREEN <strong id="timer">00</strong>s</div></div>
+  <div class="intersection-wrap">
+    <div class="road north"><div class="road-name">NORTH <b id="qN">0</b></div></div>
+    <div class="road south"><div class="road-name">SOUTH <b id="qS">0</b></div></div>
+    <div class="road east"><div class="road-name">EAST <b id="qE">0</b></div></div>
+    <div class="road west"><div class="road-name">WEST <b id="qW">0</b></div></div>
+    <div class="center"><div class="junction"></div><div class="sig sig-n" id="sigN"></div><div class="sig sig-e" id="sigE"></div><div class="sig sig-s" id="sigS"></div><div class="sig sig-w" id="sigW"></div></div>
+    <div id="cars"></div>
+    <div class="incident" id="incident">⚠ ROAD INCIDENT</div>
+    <div class="emergency" id="emergency">🚑 PRIORITY</div>
+  </div>
+</section>
+
+<section class="panel ai-panel">
+ <div class="panel-head"><div><h2>AI DECISION ENGINE</h2><span>Explainable pressure scoring</span></div><span class="live-dot">LIVE</span></div>
+ <div id="roadCards"></div>
+ <div class="explain"><span>WHY THIS DECISION?</span><p id="explanation">AI is evaluating traffic pressure.</p></div>
+</section>
+
+<section class="panel controls">
+ <div class="panel-head"><div><h2>SCENARIO CONTROL</h2><span>Inject real-time events</span></div></div>
+ <label>NETWORK DEMAND <output id="densityOut">55%</output></label>
+ <input id="density" type="range" min="10" max="100" value="55">
+ <div class="quick"><button data-density="25">LOW</button><button data-density="55">MEDIUM</button><button data-density="75">HIGH</button><button data-density="95">EXTREME</button></div>
+ <div class="control-grid">
+  <button onclick="inject('N')">+ NORTH TRAFFIC</button><button onclick="inject('E')">+ EAST TRAFFIC</button>
+  <button onclick="inject('S')">+ SOUTH TRAFFIC</button><button onclick="inject('W')">+ WEST TRAFFIC</button>
+ </div>
+ <div class="emergency-buttons"><button onclick="emergency('N','AMBULANCE')">🚑 AMBULANCE — NORTH</button><button onclick="emergency('E','FIRE TRUCK')">🚒 FIRE TRUCK — EAST</button></div>
+ <div class="ambulance-route"><div class="route-title">AMBULANCE DIRECTION</div><div class="route-buttons"><button onclick="emergency('N','AMBULANCE')">NORTH</button><button onclick="emergency('E','AMBULANCE')">EAST</button><button onclick="emergency('S','AMBULANCE')">SOUTH</button><button onclick="emergency('W','AMBULANCE')">WEST</button></div></div>
+ <div class="incident-buttons"><button onclick="accident('W')">⚠ BLOCK WEST</button><button onclick="clearAccident()">✓ CLEAR INCIDENT</button></div>
+</section>
+
+<section class="panel directional-panel"><div class="panel-head"><div><h2>DIRECTIONAL TRAFFIC CONTROL</h2><span>Live vehicles, congestion % and direction-specific injection</span></div><span class="live-dot">LIVE</span></div><div class="direction-note">Each injected vehicle is added to that approach's simulation queue. It immediately changes the direction's vehicle count and congestion, then participates in signal/AI decisions and movement.</div><div id="directionCards" class="direction-cards"></div></section>
+
+<section class="panel chart-panel"><div class="panel-head"><div><h2>PERFORMANCE TELEMETRY</h2><span>Last 40 control cycles</span></div></div><canvas id="chart"></canvas></section>
+
+<section class="panel logs"><div class="panel-head"><div><h2>AI EVENT STREAM</h2><span>Explainable system activity</span></div></div><div id="logs"></div></section>
+</main>
+<footer>ATLAS V2 · AI TRAFFIC MANAGEMENT DIGITAL TWIN · SOFTWARE SIMULATION</footer>
+</div>
+<script src="/static/js/app.js?v=directional-5055"></script>
+</body></html>
